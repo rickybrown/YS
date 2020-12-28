@@ -1,0 +1,15 @@
+
+.login {
+  margin-top: 100px;
+}
+
+.auth-buttons {
+  width: 280px;
+  margin: 100px auto;
+}
+
+.auth-buttons * {
+  font-size: 16px;
+  font-family: inherit;
+  font-weight: normal;
+}

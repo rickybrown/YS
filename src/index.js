@@ -1,20 +1,38 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import configureStore from './store/configureStore';
+import firebase from './firebase';
 import './index.css';
 import App from './App';
 import Loader from './components/Loader'
 import reportWebVitals from './reportWebVitals';
-
 import './i18n';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Suspense fallback={<Loader />}>
-      <App />
-    </Suspense>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const store = configureStore()
+const rrfProps = firebase(store)
+
+const renderApp = () => {
+  ReactDOM.render(
+    <React.StrictMode>
+      <Suspense fallback={<Loader />}>
+        <Provider store={store}>
+          <ReactReduxFirebaseProvider {...rrfProps}>
+            <App />
+          </ReactReduxFirebaseProvider>
+        </Provider>
+      </Suspense>
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+}
+
+if (process.env.NODE_ENV === 'development' && module.hot) {
+  module.hot.accept('./App', renderApp)
+}
+
+renderApp()
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import LanguageSelect from '../components/LanguageSelect';
+import Logout from 'lib/auth/Logout';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,7 +105,9 @@ export default function Navbar() {
         <LanguageSelect />
 
         <div className={classes.authButtons}>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" component={NavLink} to="/login">Login</Button>
+
+          <Logout />
         </div>
       </Toolbar>
     </AppBar>
